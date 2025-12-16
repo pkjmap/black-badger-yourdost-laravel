@@ -1,36 +1,115 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ config('app.name', 'Online Counselling & Imotional Wellness Coach') }}</title>
+    <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/dashboard_menu.css') }}">
+    <script src="{{ asset('js/dashboard_menu.js') }}"></script>
+    <link rel="icon" type="image/x-icon" href="{{ asset('images/favicon.ico') }}">
+</head>
 
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
-        <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-    </head>
-    <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100">
-            @include('layouts.navigation')
 
-            <!-- Page Heading -->
-            @isset($header)
-                <header class="bg-white shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
+<body>
+    <!-- Page Heading -->
+    @include('dashboard_header')
+    <div class="page">
+
+        <!-- LEFT SIDEBAR -->
+        <aside class="sidebar">
+            <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" class="sidebar-icon">
+            <p class="sidebar-text">
+                Get a dedicated voice / video session<br>
+                with an expert for a more focussed<br>
+                experience
+            </p>
+            <a href="#" class="sidebar-link">BOOK AN APPOINTMENT</a>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="content">
+
+            <!-- MY EXPERTS -->
+            <section class="card experts">
+                <h3>My Experts</h3>
+
+                <div class="experts-box">
+                    <div class="avatars">
+                        <img src="https://randomuser.me/api/portraits/women/44.jpg">
+                        <img src="https://randomuser.me/api/portraits/women/65.jpg">
+                        <img src="https://randomuser.me/api/portraits/women/68.jpg">
                     </div>
-                </header>
-            @endisset
 
-            <!-- Page Content -->
-            <main>
-                {{ $slot }}
-            </main>
-        </div>
-    </body>
+                    <div class="experts-text">
+                        <h4>Begin your first session...</h4>
+                        <p>
+                            Chat right now with an expert on any topic you are seeking
+                            answers for.
+                        </p>
+                        <span class="status">
+                            <span class="dot"></span>
+                            23 people are taking sessions
+                        </span>
+                    </div>
+
+                    <a href="#" class="experts-link">Explore Experts</a>
+                </div>
+            </section>
+
+            <!-- FEELING SECTION -->
+            <section class="card feelings">
+                <h3>How are you feeling today?</h3>
+
+                <div class="emoji-row">
+                    <div class="emoji">
+                        😀<span>Happy</span>
+                    </div>
+                    <div class="emoji">
+                        😰<span>Anxious</span>
+                    </div>
+                    <div class="emoji">
+                        😡<span>Angry</span>
+                    </div>
+                    <div class="emoji">
+                        😞<span>Demotivated</span>
+                    </div>
+                    <div class="emoji">
+                        😐<span>Worthless</span>
+                    </div>
+                    <div class="emoji">
+                        😢<span>Sad</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ANXIETY TEST -->
+            <section class="card test">
+                <div class="test-icon">💬</div>
+
+                <div class="test-text">
+                    <span class="tag">SELF TEST</span>
+                    <h4>Anxiety Test</h4>
+                    <p>
+                        Anxiety is an emotion of dread, fear and worry that something
+                        will go wrong. Have you been feeling particularly anxious?
+                        Why not check it?
+                    </p>
+                </div>
+
+                <a href="#" class="quiz-link">TAKE A QUIZ</a>
+            </section>
+            {{ $slot }}
+        </main>
+    </div>
+    @include('dashboard_footer')
+</body>
+
+
+
+
+
+
 </html>
