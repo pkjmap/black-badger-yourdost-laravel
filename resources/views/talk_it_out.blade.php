@@ -37,14 +37,15 @@
     <span class="search-icon">🔍</span>
     <input
       type="text"
+      name="search"
       placeholder="Search by expert name" />
   </div>
 
   <!-- Right sort -->
   <div class="sort-options">
     <span class="label">Sort by :</span>
-    <a href="#">Rating</a>
-    <a href="#">Appointment Availability</a>
+    <a href="#" data-sort="rating">Rating</a>
+    <a href="#" data-sort="availability">Appointment Availability</a>
   </div>
 </div>
 <div class="experts-grid">
@@ -129,49 +130,147 @@
 <script>
   document.addEventListener('DOMContentLoaded', () => {
 
-    let page = 1; // start from page 1
+    let page = 1;
+    let search = '';
+    let sort = ''; // rating | availability
+    let debounceTimer = null;
 
-    function loadExperts() {
-      fetch("{{ route('load.more.experts') }}?page=" + page, {
-          method: 'GET',
+    const expertsGrid = document.querySelector('.experts-grid');
+    const scrollBtn = document.querySelector('.scroll-btn');
+    const searchInput = document.querySelector('input[name="search"]');
+    const sortLinks = document.querySelectorAll('.sort-options a');
+
+    function loadExperts(reset = false) {
+      if (reset) {
+        page = 1;
+        expertsGrid.innerHTML = '';
+        scrollBtn.style.display = 'block';
+      }
+
+      const params = new URLSearchParams({
+        page,
+        search,
+        sort
+      });
+
+      fetch("{{ route('load.more.experts') }}?" + params.toString(), {
           headers: {
             'X-Requested-With': 'XMLHttpRequest',
             'Accept': 'application/json',
           }
         })
-        .then(response => response.json())
+        .then(res => res.json())
         .then(data => {
-          console.log(data);
-
-          if (data.html) {
-            document.querySelector('.experts-grid').insertAdjacentHTML(
-              'beforeend',
-              data.html
-            );
-            page++; // increment page number for next request
+          if (data.html && data.html.trim() !== '') {
+            expertsGrid.insertAdjacentHTML('beforeend', data.html);
+            page++;
           } else {
-            // Optional: disable button if no more data
-            document.querySelector('.scroll-btn').disabled = true;
-            //document.querySelector('.scroll-btn').innerText = 'No more experts';
+            scrollBtn.style.display = 'none';
           }
         })
-        .catch(error => {
-          console.error('Error:', error);
-        });
+        .catch(console.error);
     }
 
-    // Call on page load
+    /* ---------- INITIAL LOAD ---------- */
     loadExperts();
 
-    // Call on button click
-    document.querySelector('.scroll-btn').addEventListener('click', function() {
+    /* ---------- LOAD MORE ---------- */
+    scrollBtn.addEventListener('click', () => {
       loadExperts();
+    });
+
+    /* ---------- SEARCH (300ms DEBOUNCE) ---------- */
+    searchInput.addEventListener('input', (e) => {
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(() => {
+        search = e.target.value.trim();
+        loadExperts(true);
+      }, 300);
+    });
+
+    /* ---------- SORT ---------- */
+    sortLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+
+        // UI active state
+        sortLinks.forEach(l => l.classList.remove('active'));
+        link.classList.add('active');
+
+        sort = link.dataset.sort;
+        loadExperts(true);
+      });
+    });
+
+  });
+</script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+
+    const modal = document.getElementById('scheduleModal');
+    const modalContent = document.getElementById('modalContent');
+    const expertNameEl = document.getElementById('expertName');
+    const expertsGrid = document.querySelector('.experts-grid');
+
+    // 🔹 EVENT DELEGATION
+    expertsGrid.addEventListener('click', (e) => {
+      const link = e.target.closest('.see-more');
+      if (!link) return;
+
+      e.preventDefault();
+
+      const expertId = link.dataset.id;
+      const expertName = link.closest('.expert-card')
+        .querySelector('h3').innerText;
+
+      expertNameEl.innerText = expertName;
+      modal.style.display = 'flex';
+      modalContent.innerHTML = '<p>Loading...</p>';
+
+      fetch(`./experts/${expertId}/schedule`, {
+          headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+          }
+        })
+        .then(res => res.text())
+        .then(html => modalContent.innerHTML = html)
+        .catch(() => modalContent.innerHTML = 'Failed to load schedule');
+    });
+
+    // 🔹 Close modal
+    modal.addEventListener('click', (e) => {
+      if (
+        e.target.classList.contains('modal-overlay') ||
+        e.target.classList.contains('modal-close') ||
+        e.target.classList.contains('close-btn')
+      ) {
+        modal.style.display = 'none';
+      }
     });
 
   });
 </script>
 
 
+
+
+<div id="scheduleModal" class="modal-overlay">
+  <div class="modal-box">
+    <button class="modal-close">&times;</button>
+
+    <h3 class="modal-title">
+      🕒 <span id="expertName">Expert</span>'s Schedule
+    </h3>
+
+    <div id="modalContent">
+      <p>Loading...</p>
+    </div>
+
+    <div class="modal-footer">
+      <button class="close-btn">CLOSE</button>
+    </div>
+  </div>
+</div>
 @endsection
 @push('styles')
 <link rel="stylesheet" href="{{ asset('css/talk_it_out.css') }}">

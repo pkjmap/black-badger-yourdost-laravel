@@ -345,3 +345,54 @@ body {
   font-size: 20px;
   cursor: pointer;
 }
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.4);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.modal-box {
+  background: #fff;
+  width: 420px;
+  border-radius: 10px;
+  padding: 20px;
+  position: relative;
+}
+
+.modal-title {
+  font-size: 18px;
+  margin-bottom: 12px;
+}
+
+.modal-close {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  font-size: 22px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.schedule-row {
+  display: flex;
+  gap: 10px;
+  margin: 6px 0;
+}
+
+.leave-box {
+  background: #f6f6f6;
+  padding: 12px;
+  margin-top: 15px;
+  border-radius: 6px;
+}
+
+.modal-footer {
+  text-align: right;
+  margin-top: 15px;
+}

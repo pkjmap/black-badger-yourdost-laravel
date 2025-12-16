@@ -24,7 +24,8 @@ CREATE TABLE IF NOT EXISTS `cache` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Dumping data for table yourdost.cache: ~0 rows (approximately)
-INSERT IGNORE INTO `cache` (`key`, `value`, `expiration`) VALUES
+DELETE FROM `cache`;
+INSERT INTO `cache` (`key`, `value`, `expiration`) VALUES
 	('laravel-cache-livewire-rate-limiter:16d36dff9abd246c67dfac3e63b993a169af77e6', 'i:1;', 1765855967),
 	('laravel-cache-livewire-rate-limiter:16d36dff9abd246c67dfac3e63b993a169af77e6:timer', 'i:1765855967;', 1765855967);
 
@@ -38,6 +39,7 @@ CREATE TABLE IF NOT EXISTS `cache_locks` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Dumping data for table yourdost.cache_locks: ~0 rows (approximately)
+DELETE FROM `cache_locks`;
 
 -- Dumping structure for table yourdost.contact_requests
 DROP TABLE IF EXISTS `contact_requests`;
@@ -58,7 +60,8 @@ CREATE TABLE IF NOT EXISTS `contact_requests` (
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Dumping data for table yourdost.contact_requests: ~0 rows (approximately)
-INSERT IGNORE INTO `contact_requests` (`id`, `inquiry_type`, `first_name`, `last_name`, `phone_number`, `email`, `organization`, `role`, `help_message`, `heard_from`, `created_at`, `updated_at`) VALUES
+DELETE FROM `contact_requests`;
+INSERT INTO `contact_requests` (`id`, `inquiry_type`, `first_name`, `last_name`, `phone_number`, `email`, `organization`, `role`, `help_message`, `heard_from`, `created_at`, `updated_at`) VALUES
 	(1, 'partner', 'aaa', 'aa', 'aaaa', 'aa@ww.com', 'aa', 'aa', 'aaa', '["word_of_mouth", "conference", "linkedin"]', '2025-12-16 02:16:31', '2025-12-16 02:16:31'),
 	(2, 'partner', 'aaa', 'aa', 'aaaa', 'aa@ww.com', 'aa', 'aa', 'aaa', '["word_of_mouth", "conference", "linkedin"]', '2025-12-16 02:17:05', '2025-12-16 02:17:05'),
 	(3, 'other', 'aa', 'aa', 'aaaa', 'aa@ww.com', 'aa', 'aa', 'zdf dsf', '["social_ad"]', '2025-12-16 02:42:01', '2025-12-16 02:42:01');
@@ -81,7 +84,8 @@ CREATE TABLE IF NOT EXISTS `experts` (
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Dumping data for table yourdost.experts: ~1 rows (approximately)
-INSERT IGNORE INTO `experts` (`id`, `name`, `role`, `profile_image`, `is_online`, `rating`, `conversations`, `next_available_date`, `chat_schedule`, `created_at`, `updated_at`) VALUES
+DELETE FROM `experts`;
+INSERT INTO `experts` (`id`, `name`, `role`, `profile_image`, `is_online`, `rating`, `conversations`, `next_available_date`, `chat_schedule`, `created_at`, `updated_at`) VALUES
 	(1, 'Sheena', 'Phsycartrist', NULL, 0, 2.5, 1023, '2025-12-16', '2025-12-16 05:50:10', '2025-12-16 09:45:34', '2025-12-16 09:45:35');
 
 -- Dumping structure for table yourdost.expert_leaves
@@ -97,9 +101,12 @@ CREATE TABLE IF NOT EXISTS `expert_leaves` (
   PRIMARY KEY (`id`),
   KEY `expert_leaves_expert_id_foreign` (`expert_id`),
   CONSTRAINT `expert_leaves_expert_id_foreign` FOREIGN KEY (`expert_id`) REFERENCES `experts` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table yourdost.expert_leaves: ~0 rows (approximately)
+-- Dumping data for table yourdost.expert_leaves: ~1 rows (approximately)
+DELETE FROM `expert_leaves`;
+INSERT INTO `expert_leaves` (`id`, `expert_id`, `leave_start`, `leave_end`, `reason`, `created_at`, `updated_at`) VALUES
+	(1, 1, '2025-12-16 17:14:10', '2025-12-16 17:14:12', 'Meeiting', '2025-12-16 11:44:22', '2025-12-16 11:44:23');
 
 -- Dumping structure for table yourdost.expert_schedules
 DROP TABLE IF EXISTS `expert_schedules`;
@@ -114,9 +121,16 @@ CREATE TABLE IF NOT EXISTS `expert_schedules` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `expert_schedules_expert_id_day_unique` (`expert_id`,`day`),
   CONSTRAINT `expert_schedules_expert_id_foreign` FOREIGN KEY (`expert_id`) REFERENCES `experts` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table yourdost.expert_schedules: ~0 rows (approximately)
+-- Dumping data for table yourdost.expert_schedules: ~5 rows (approximately)
+DELETE FROM `expert_schedules`;
+INSERT INTO `expert_schedules` (`id`, `expert_id`, `day`, `start_time`, `end_time`, `created_at`, `updated_at`) VALUES
+	(1, 1, 'mon', '17:11:09', '17:11:11', '2025-12-16 11:41:15', '2025-12-16 11:41:16'),
+	(2, 1, 'tue', '17:11:32', '17:11:35', '2025-12-16 11:41:36', '2025-12-16 11:41:37'),
+	(3, 1, 'wed', '17:11:47', '17:11:48', '2025-12-16 11:41:49', '2025-12-16 11:41:50'),
+	(4, 1, 'thu', '17:12:02', '17:12:03', '2025-12-16 11:42:04', '2025-12-16 11:42:04'),
+	(5, 1, 'fri', '17:12:16', '17:12:17', '2025-12-16 11:42:18', '2025-12-16 11:42:19');
 
 -- Dumping structure for table yourdost.failed_jobs
 DROP TABLE IF EXISTS `failed_jobs`;
@@ -133,6 +147,7 @@ CREATE TABLE IF NOT EXISTS `failed_jobs` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Dumping data for table yourdost.failed_jobs: ~0 rows (approximately)
+DELETE FROM `failed_jobs`;
 
 -- Dumping structure for table yourdost.jobs
 DROP TABLE IF EXISTS `jobs`;
@@ -149,6 +164,7 @@ CREATE TABLE IF NOT EXISTS `jobs` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Dumping data for table yourdost.jobs: ~0 rows (approximately)
+DELETE FROM `jobs`;
 
 -- Dumping structure for table yourdost.job_batches
 DROP TABLE IF EXISTS `job_batches`;
@@ -167,6 +183,7 @@ CREATE TABLE IF NOT EXISTS `job_batches` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Dumping data for table yourdost.job_batches: ~0 rows (approximately)
+DELETE FROM `job_batches`;
 
 -- Dumping structure for table yourdost.migrations
 DROP TABLE IF EXISTS `migrations`;
@@ -178,7 +195,8 @@ CREATE TABLE IF NOT EXISTS `migrations` (
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Dumping data for table yourdost.migrations: ~1 rows (approximately)
-INSERT IGNORE INTO `migrations` (`id`, `migration`, `batch`) VALUES
+DELETE FROM `migrations`;
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 	(1, '0001_01_01_000000_create_users_table', 1),
 	(2, '0001_01_01_000001_create_cache_table', 1),
 	(3, '0001_01_01_000002_create_jobs_table', 1),
@@ -197,6 +215,7 @@ CREATE TABLE IF NOT EXISTS `password_reset_tokens` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Dumping data for table yourdost.password_reset_tokens: ~0 rows (approximately)
+DELETE FROM `password_reset_tokens`;
 
 -- Dumping structure for table yourdost.sessions
 DROP TABLE IF EXISTS `sessions`;
@@ -213,8 +232,9 @@ CREATE TABLE IF NOT EXISTS `sessions` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Dumping data for table yourdost.sessions: ~0 rows (approximately)
-INSERT IGNORE INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-	('6udpDbRR8LyY3PbJbdm6ligFjXM5pjgnK4i6VgVC', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:146.0) Gecko/20100101 Firefox/146.0', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiaTVDeFVtUXJhWjVnMmlhakZnTW9TNHh5c3JhRHRYa0RHOW5VOWc5QyI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MzE6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC9kYXNoYm9hcmQiO3M6NToicm91dGUiO3M6OToiZGFzaGJvYXJkIjt9czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6MTt9', 1765881737);
+DELETE FROM `sessions`;
+INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
+	('6udpDbRR8LyY3PbJbdm6ligFjXM5pjgnK4i6VgVC', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:146.0) Gecko/20100101 Firefox/146.0', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiaTVDeFVtUXJhWjVnMmlhakZnTW9TNHh5c3JhRHRYa0RHOW5VOWc5QyI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MzM6Imh0dHA6Ly9sb2NhbGhvc3Q6ODAwMC90YWxrLWl0LW91dCI7czo1OiJyb3V0ZSI7czoxMToidGFsay5pdC5vdXQiO31zOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aToxO30=', 1765885510);
 
 -- Dumping structure for table yourdost.users
 DROP TABLE IF EXISTS `users`;
@@ -234,7 +254,8 @@ CREATE TABLE IF NOT EXISTS `users` (
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Dumping data for table yourdost.users: ~0 rows (approximately)
-INSERT IGNORE INTO `users` (`id`, `name`, `username`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `agree_terms`) VALUES
+DELETE FROM `users`;
+INSERT INTO `users` (`id`, `name`, `username`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `agree_terms`) VALUES
 	(1, 'Black Badger', 'admin', 'admin@admin.com', NULL, '$2y$12$rChqH2gS5WTJzJdO6mejAuRwoNh8ylUgA3sGYdoJVPzWLJ.lZoiA2', '7PdEd3B9W4MSk49zCjRnCFk9U6bsAknlV9lwDdHJTDgKE1HCK9koliMmdDfa', '2025-12-15 21:56:42', '2025-12-15 21:56:42', NULL),
 	(2, NULL, 'pkj', 'pkj@lal.com', NULL, '$2y$12$y09HM4hV2oU3FzhejWjXGehsRhgi57cmbHnw2gdLUqvnoAerbBElK', NULL, '2025-12-15 23:34:28', '2025-12-15 23:34:28', NULL);
 

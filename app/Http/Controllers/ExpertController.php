@@ -9,21 +9,35 @@ class ExpertController extends Controller
 {
     public function ajax_load(Request $request)
     {
-        $page = (int) $request->input('page', 1);
-        $perPage = 18;
-
-        $experts = Expert::with(['schedules', 'leaves'])
-            ->skip(($page - 1) * $perPage)
-            ->take($perPage)
-            ->get();
-
-        // Render Blade partial
-        $html = view('experts.cards', compact('experts'))->render();
+        $experts = Expert::query()
+            ->when(
+                $request->search,
+                fn($q) =>
+                $q->where('name', 'like', '%' . $request->search . '%')
+            )
+            ->when(
+                $request->sort === 'rating',
+                fn($q) =>
+                $q->orderByDesc('rating')
+            )
+            ->when(
+                $request->sort === 'availability',
+                fn($q) =>
+                $q->orderBy('next_available_date')
+            )
+            ->paginate(6);
 
         return response()->json([
-            'html' => $html,
-            'next_page' => $page + 1,
-            'count' => $experts->count(),
+            'html' => view('experts.cards', compact('experts'))->render()
         ]);
+    }
+
+    public function schedule(Expert $expert)
+    {
+        $expert->load([
+            'schedules',      // weekly schedules
+            'leaves',         // leave dates (if separate)
+        ]);
+        return view('experts.expert-schedule', compact('expert'));
     }
 }

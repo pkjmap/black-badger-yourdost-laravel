@@ -29,7 +29,7 @@
                 : 'N/A' }}
 
             </P>
-            <a href="#" class="see-more" data-id="{{ $expert->id }}">
+            <a class="see-more" data-id="{{ $expert->id }}">
                 See More &gt;
             </a>
         </div>

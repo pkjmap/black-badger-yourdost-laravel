@@ -18,6 +18,8 @@ Route::get('/talk-it-out', action: function () {
 })->name('talk.it.out');
 
 Route::get('/load-more-experts', [ExpertController::class, 'ajax_load'])->name('load.more.experts');
+Route::get('/experts/{expert}/schedule', [ExpertController::class, 'schedule']);
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
