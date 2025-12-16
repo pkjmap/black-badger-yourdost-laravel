@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{ config('app.name', 'Online Counselling & Imotional Wellness Coach') }}</title>
+  <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/signup-modal.css') }}">
+  <link rel="icon" type="image/x-icon" href="{{ asset('images/favicon.ico') }}">
+</head>
+
+<body>
+  <header class="navbar">
+    <div class="nav-left">
+      <div class="logo">
+        <span class="logo-icon"><img src="{{ asset('images/favicon.ico')}}" /></span>
+        <a href="index.php"><span class="logo-text">Your<span>DOST</span></span></a>
+      </div>
+
+      <nav>
+        <ul class="menu">
+          <li class="has-mega">
+            <a href="#">Our Solutions</a>
+
+            <!-- MEGA MENU -->
+            <div class="mega-menu">
+              <div class="mega-col">
+                <h4>For Corporates</h4>
+                <a href="eap.html">E.A.P.</a>
+                <a href="eap.html">Employee Engagement</a>
+                <a href="eap.html">Culture Compass</a>
+              </div>
+
+              <div class="mega-col">
+                <h4>For Colleges</h4>
+                <a href="eap.html">Student Wellness</a>
+                <a href="eap.html">Career Counselling</a>
+                <a href="eap.html">Suicide Prevention</a>
+              </div>
+
+              <div class="mega-col">
+                <h4>For Schools</h4>
+                <a href="eap.html">Assessments</a>
+                <a href="eap.html">Faculty Development</a>
+                <a href="eap.html">Shadow Teachers</a>
+              </div>
+            </div>
+          </li>
+
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">The Festival of Joy</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <div class="nav-right">
+      <?php
+      //echo (auth()->user()->name);
+      ?>
+      @if(auth()->guest())
+      <button class="btn-outline" onclick="openModal()">Login / Signup</button>
+      @endif
+      <?php
+      $currentUrl = $_SERVER['REQUEST_URI'];
+
+      if (strpos($currentUrl, 'expert') === false) {
+      ?>
+        <button class="btn-primary" onclick="scrollToWellbeing()">Book A Demo</button>
+      <?php
+      }
+      ?>
+
+    </div>
+  </header>
+  <!-- MODAL BACKDROP -->
+  <div class="modal-backdrop" id="loginModal">
+    <div class="modal">
+      <form method="post" action="{{ route('login') }}">
+        @csrf
+        <button class="close-btn" onclick="closeModal()">×</button>
+
+        <h2 class="modal-title">Login</h2>
+
+        <button class="btn mobile-btn">Login With Mobile</button>
+
+        <div class="divider">
+          <span>OR</span>
+        </div>
+
+        <button class="btn google-btn">
+          <span class="google-icon">G</span> Google
+        </button>
+
+        <p class="helper-text">
+          Don't worry, you stay anonymous even with social login.
+        </p>
+
+        <div class="divider">
+          <span>OR</span>
+        </div>
+
+        <div class="input-group">
+          <span class="icon">👤</span>
+          <input type="text" name="email" placeholder="Email Or Username" />
+        </div>
+
+        <div class="input-group">
+          <span class="icon">🔒</span>
+          <input type="password" name="password" placeholder="Password" id="password" />
+          <span class="eye" onclick="togglePassword()">👁️</span>
+        </div>
+
+        <a href="#" class="forgot-link" onclick="openResetModal()">Forgot username / password?</a>
+
+        <button class="btn login-btn">LOGIN</button>
+
+        <p class="signup-text">
+          Don't have an account?
+          <a href="#" onclick="openSignup()">Signup now</a>
+        </p>
+      </form>
+    </div>
+  </div>
+  <script>
+    function openResetModal() {
+      closeModal(); // close login modal
+      document.getElementById("resetModal").style.display = "flex";
+    }
+
+    function closeResetModal() {
+      document.getElementById("resetModal").style.display = "none";
+    }
+
+    /* Close on backdrop click */
+    document.getElementById("resetModal").addEventListener("click", function(e) {
+      if (e.target === this) {
+        closeResetModal();
+      }
+    });
+  </script>
+
+  <!-- RESET PASSWORD MODAL -->
+  <div class="modal-overlay" id="resetModal">
+    <div class="modal-box">
+      <button class="close-btn" onclick="closeResetModal()">×</button>
+
+      <h2 class="modal-title">Send Reset Password Link</h2>
+
+      <form method="post" action="{{ route('password.request') }}">
+        @csrf
+        <div class="input-group simple">
+          <label>Username</label>
+          <input type="text" name="username">
+        </div>
+
+        <div class="or-text">OR</div>
+
+        <div class="input-group simple">
+          <label>Email Address</label>
+          <input type="email" name="email">
+        </div>
+
+        <button type="submit" class="submit-btn">SUBMIT</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL -->
+  <div class="modal-overlay" id="signupModal">
+    <div class="modal-box">
+      <form method="post" action="{{ route('register') }}">
+        @csrf
+        <button class="close-btn" onclick="closeSignup()">×</button>
+
+        <h2 class="modal-title">Sign Up - This'll be quick</h2>
+
+        <button class="btn google-btn">
+          <span class="google-icon">G</span> Google
+        </button>
+
+        <p class="note-text">
+          Don't worry, you can anonymize yourself in the next step.
+        </p>
+
+        <div class="divider"><span>OR</span></div>
+
+        <div class="input-row">
+          <span class="icon">👤</span>
+          <input type="text" placeholder="Username">
+        </div>
+
+        <div class="input-row">
+          <span class="icon">🔒</span>
+          <input type="password" placeholder="Password" id="signupPassword">
+          <span class="eye" onclick="toggleSignupPassword()">👁️</span>
+        </div>
+
+        <div class="input-row">
+          <span class="icon">✉️</span>
+          <input type="email" placeholder="Email">
+        </div>
+
+        <label class="checkbox-row">
+          <input type="checkbox">
+          <span>
+            By signing up you are agreeing to
+            <a href="#">Terms of Services</a> and
+            <a href="#">Privacy Policy</a> of YourDOST.
+          </span>
+        </label>
+
+        <button class="btn signup-btn">SIGNUP</button>
+
+        <p class="footer-text">
+          Have an account? <a href="#" onclick="javascript:openModal()">Login now</a>
+        </p>
+      </form>
+    </div>
+  </div>
+
+
+  <script>
+    function openModal() {
+      document.getElementById("signupModal").style.display = "none";
+      document.getElementById("loginModal").style.display = "flex";
+    }
+
+    function closeModal() {
+      document.getElementById("loginModal").style.display = "none";
+    }
+
+    function togglePassword() {
+      const pwd = document.getElementById("password");
+      pwd.type = pwd.type === "password" ? "text" : "password";
+    }
+
+    /* Close on backdrop click */
+    document.getElementById("loginModal").addEventListener("click", function(e) {
+      if (e.target === this) {
+        closeModal();
+      }
+    });
+
+    function scrollToWellbeing() {
+      const section = document.querySelector('.wellbeing-solution-section');
+      if (section) {
+        section.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+      }
+    }
+  </script>

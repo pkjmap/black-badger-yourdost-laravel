@@ -1,0 +1,225 @@
+* {
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+.open-btn {
+  padding: 12px 18px;
+  background: #5f4b8b;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* Overlay */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+/* Modal */
+.modal-box {
+  background: #fff;
+  width: 420px;
+  max-width: 92%;
+  padding: 30px;
+  border-radius: 12px;
+  position: relative;
+}
+
+.close-btn {
+  position: absolute;
+  right: 16px;
+  top: 16px;
+  font-size: 22px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.modal-title {
+  text-align: center;
+  margin-bottom: 22px;
+}
+
+/* Buttons */
+.btn {
+  width: 100%;
+  padding: 14px;
+  border-radius: 6px;
+  border: none;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.google-btn {
+  background: #db4437;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.google-icon {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+/* Text */
+.note-text {
+  font-size: 13px;
+  color: #666;
+  text-align: center;
+  margin: 12px 0;
+}
+
+/* Divider */
+.divider {
+  display: flex;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.divider::before,
+.divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #ddd;
+}
+
+.divider span {
+  margin: 0 12px;
+  font-size: 13px;
+  color: #666;
+}
+
+/* Inputs */
+.input-row {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #999;
+  margin-bottom: 22px;
+}
+
+.input-row input {
+  border: none;
+  outline: none;
+  padding: 10px;
+  flex: 1;
+  font-size: 14px;
+}
+
+.icon {
+  margin-right: 10px;
+}
+
+.eye {
+  cursor: pointer;
+}
+
+/* Checkbox */
+.checkbox-row {
+  display: flex;
+  gap: 10px;
+  font-size: 13px;
+  color: #666;
+  margin: 15px 0 20px;
+}
+
+.checkbox-row a {
+  color: #2a6df4;
+  text-decoration: none;
+}
+
+/* Signup */
+.signup-btn {
+  background: #9a94b7;
+  color: #fff;
+  margin-bottom: 15px;
+}
+
+.footer-text {
+  text-align: center;
+  font-size: 14px;
+}
+
+.footer-text a {
+  color: #5f4b8b;
+  text-decoration: none;
+}
+/* RESET PASSWORD MODAL */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+}
+
+.modal-box {
+  background: #fff;
+  width: 420px;
+  padding: 30px 28px;
+  border-radius: 6px;
+  position: relative;
+}
+
+.modal-title {
+  font-size: 24px;
+  font-weight: 600;
+  color: #3c2b6e;
+  margin-bottom: 26px;
+}
+
+.input-group.simple label {
+  display: block;
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 6px;
+}
+
+.input-group.simple input {
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid #999;
+  padding: 6px 2px;
+  font-size: 15px;
+  outline: none;
+}
+
+.input-group.simple input:focus {
+  border-bottom-color: #5d568b;
+}
+
+.or-text {
+  text-align: center;
+  margin: 18px 0;
+  color: #555;
+}
+
+.submit-btn {
+  width: 100%;
+  margin-top: 26px;
+  padding: 14px 0;
+  background: #5d568b;
+  color: #fff;
+  border: none;
+  border-radius: 30px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.submit-btn:hover {
+  background: #4c4679;
+}

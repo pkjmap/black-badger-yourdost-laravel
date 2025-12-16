@@ -1,0 +1,306 @@
+/* 1. The Main Section: Background and Padding */
+.expert-section {
+    background-color: #79c9c4; /* Main background color (a light teal/aqua) */
+    color: white; /* All text should be white */
+    padding: 80px 20px; /* Vertical padding to give space above and below content */
+    text-align: center; /* Center all inline content (text) */
+    
+    /* Creating the subtle diagonal line pattern */
+    /* This uses two linear gradients for the repeating diagonal lines */
+    background-image: 
+        linear-gradient(135deg, rgba(255, 255, 255, 0.1) 25%, transparent 25%),
+        linear-gradient(-135deg, rgba(255, 255, 255, 0.1) 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, rgba(255, 255, 255, 0.1) 75%),
+        linear-gradient(-45deg, transparent 75%, rgba(255, 255, 255, 0.1) 75%);
+    background-size: 40px 40px; /* Size of the repeating pattern block */
+    background-position: 0 0, 10px 0, 10px 10px, 0 10px; /* Adjusting the starting position for the repeat */
+}
+
+/* 2. Content Container (Optional but good practice for max-width) */
+.content-container {
+    max-width: 800px; /* Limits the width of the text block */
+    margin: 0 auto; /* Centers the block itself */
+}
+
+/* 3. Main Heading Style */
+.expert-section h1 {
+    font-size: 2.5em; /* Large, bold text */
+    font-weight: 700; /* Bolder font */
+    line-height: 1.2;
+    margin: 0 0 15px 0; /* Remove default top margin and add bottom margin */
+    letter-spacing: 1px; /* Slightly spaced out text */
+}
+
+/* 4. Separator Line */
+.separator {
+    width: 60px; /* Length of the line */
+    height: 3px; /* Thickness of the line */
+    background-color: white;
+    margin: 0 auto 20px auto; /* Center the line and add space below it */
+}
+
+/* 5. Descriptive Paragraph Style */
+.expert-section p {
+    font-size: 1.15em; /* Slightly larger than standard body text */
+    font-style: italic; /* The text is italicized in the image */
+    font-weight: 400; /* Regular weight */
+    line-height: 1.5;
+    margin: 0; /* Remove default margins */
+}
+/* 1. Main Section Styling */
+.invitation-section {
+    background-color: white; /* The background is plain white */
+    padding: 60px 20px; /* Add vertical padding for breathing room */
+    text-align: center; /* Center all inline content (text) */
+    
+    /* Ensure the font is capable of displaying bold, impactful text */
+    font-family: Arial, sans-serif; 
+}
+
+/* 2. Main Heading (H2) Style */
+.invitation-section h2 {
+    color: #000000; /* Pure black text */
+    font-size: 3.5em; /* Very large text size */
+    font-weight: 900; /* Extremely bold/heavy font weight */
+    line-height: 1.2;
+    margin: 0; /* Remove default margins to place it close to the text below */
+    text-transform: none; /* Text is uppercase in the image */
+}
+
+/* Note: To achieve the blocky, thick look of the font in the image, 
+   you would ideally need to use a specific display font (like 'Impact' or a font 
+   from Google Fonts like 'Oswald' or 'Anton') */
+
+/* 3. Roles List Sub-text Style */
+.roles-list {
+    color: #777777; /* Light gray color */
+    font-size: 1em; /* Standard text size */
+    font-weight: 400; /* Regular weight */
+    line-height: 1.5;
+    margin: 10px 0 0 0; /* Add a small margin above the text to separate it from the H2 */
+}
+
+/* ======================================= */
+/* 1. CSS GRID for the Main Layout */
+/* ======================================= */
+.expert-signup-container {
+    display: grid;
+    /* Create two columns: 1 unit for the left, 1.2 units for the right (to match proportions) */
+    grid-template-columns: 1fr 1.2fr; 
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+/* Headings for both sections */
+.expert-signup-container h3 {
+    font-size: 1.1em;
+    font-weight: 700;
+    color: #333;
+    margin-top: 0;
+    margin-bottom: 30px;
+}
+
+/* ======================================= */
+/* 2. Left Column: Features List Styling */
+/* ======================================= */
+.features-list {
+    padding-right: 40px; /* Space between the two columns */
+    border-right: 1px solid #eee; /* Faint separator line */
+}
+
+.feature-item {
+    display: flex; /* Use flexbox to align icon and content horizontally */
+    align-items: flex-start; /* Align content to the top */
+    margin-bottom: 25px;
+    position: relative; /* Needed for the custom icon lines */
+}
+
+/* Icon Background (The diamond shape with line segments) */
+.icon-bg {
+    width: 60px;
+    height: 60px;
+    /* Create the diamond shape using transform */
+    transform: rotate(45deg); 
+    border: 2px solid #36a9a3; /* Teal border color */
+    margin-right: 35px;
+    position: relative;
+    z-index: 10; /* Ensures the icon is above the connector line */
+    background-color: white; /* White fill for the icon diamond */
+}
+
+/* Connector Line (The vertical line connecting the features) */
+.feature-item::after {
+    content: '';
+    position: absolute;
+    top: 60px; /* Start below the icon */
+    left: 29px; /* Center under the icon */
+    width: 2px;
+    height: calc(100% - 35px); /* Extend down to the next feature (approx) */
+    background-color: #c0e3e1; /* Light teal line color */
+    z-index: 5;
+}
+/* The last feature doesn't need the line */
+.features-list .feature-item:last-of-type::after {
+    display: none;
+}
+
+.feature-content h4 {
+    color: #36a9a3; /* Teal heading color */
+    font-size: 1em;
+    margin: 0 0 5px 0;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.feature-content p {
+    color: #555;
+    font-size: 0.9em;
+    margin: 0;
+    line-height: 1.4;
+}
+
+/* Logo and Links Section (Below the 3rd feature) */
+.dost-links {
+    margin: 50px 0; /* Vertical space */
+    padding-left: 100px; /* Align content with feature descriptions */
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.dost-links .logo {
+    color: #333;
+    font-size: 1.2em;
+    font-weight: 400;
+    margin-right: 20px;
+}
+
+.dost-links a {
+    color: #999;
+    text-decoration: none;
+    font-size: 0.8em;
+    margin-right: 15px;
+    margin-top: 5px;
+}
+
+/* ======================================= */
+/* 3. Right Column: Signup Form Styling */
+/* ======================================= */
+.signup-form {
+    padding-left: 40px;
+    position: relative;
+}
+
+/* Form Fields Styling */
+.form-fields input,
+.form-fields select,
+.form-fields textarea {
+    width: 100%;
+    padding: 10px 0;
+    margin-bottom: 25px;
+    border: none;
+    border-bottom: 1px solid #ccc; /* Underline input style */
+    font-size: 1em;
+    box-sizing: border-box; /* Include padding in the element's total width/height */
+    color: #555;
+}
+.form-fields input:focus,
+.form-fields select:focus {
+    outline: none;
+    border-bottom-color: #36a9a3;
+}
+
+/* File Upload Row */
+.file-upload-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 40px;
+}
+
+.file-upload-row label {
+    font-weight: 600;
+    color: #555;
+}
+
+.attach-btn {
+    background-color: #8ac052; /* Green attach button color */
+    color: white;
+    padding: 8px 15px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    border-radius: 3px;
+}
+
+/* Submit Button */
+.submit-btn {
+    width: 100%;
+    background-color: #36a9a3; /* Teal submit button color */
+    color: white;
+    padding: 15px;
+    border: none;
+    font-size: 1.1em;
+    font-weight: 700;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+/* Login Link */
+.login-link-container {
+    position: absolute;
+    top: 50px; /* Position it high near the first input */
+    right: 40px; /* Align to the right side */
+}
+
+.login-signup-btn {
+    background-color: white;
+    color: #8c7db6; /* Purple border and text color */
+    border: 1px solid #8c7db6;
+    padding: 5px 15px;
+    text-decoration: none;
+    font-size: 0.9em;
+    border-radius: 20px;
+}
+
+.file-upload-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.file-label {
+    min-width: 120px;
+    font-weight: 600;
+}
+
+.file-upload-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: relative;
+}
+
+.file-input {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.attach-btn {
+    padding: 8px 16px;
+    background-color: #5b3b8c;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.file-name {
+    font-size: 14px;
+    color: #555;
+    white-space: nowrap;
+}
