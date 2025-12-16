@@ -187,29 +187,41 @@
 
         <div class="input-row">
           <span class="icon">👤</span>
-          <input type="text" placeholder="Username">
-        </div>
+          <input type="text" placeholder="Username" name="username" value="{{ old('username') }}">
 
+        </div>
+        @error('username')
+        <small class="error-text">{{ $message }}</small>
+        @enderror
         <div class="input-row">
           <span class="icon">🔒</span>
-          <input type="password" placeholder="Password" id="signupPassword">
+          <input type="password" placeholder="Password" id="signupPassword" name="password">
           <span class="eye" onclick="toggleSignupPassword()">👁️</span>
-        </div>
 
+        </div>
+        @error('password')
+        <small class="error-text">{{ $message }}</small>
+        @enderror
         <div class="input-row">
           <span class="icon">✉️</span>
-          <input type="email" placeholder="Email">
-        </div>
+          <input type="email" placeholder="Email" name="email" value="{{ old('email') }}">
 
+        </div>
+        @error('email')
+        <small class="error-text">{{ $message }}</small>
+        @enderror
         <label class="checkbox-row">
-          <input type="checkbox">
+          <input type="checkbox" name="agree_terms" value="1">
           <span>
             By signing up you are agreeing to
             <a href="#">Terms of Services</a> and
             <a href="#">Privacy Policy</a> of YourDOST.
           </span>
-        </label>
 
+        </label>
+        @error('agree_terms')
+        <small class="error-text">{{ $message }}</small>
+        @enderror
         <button class="btn signup-btn">SIGNUP</button>
 
         <p class="footer-text">

@@ -1660,3 +1660,9 @@ body {
     box-shadow: 0 6px 16px rgba(91, 59, 140, 0.3);
 }
 
+.error-text {
+    color: #e53935;
+    font-size: 12px;
+    margin-top: -4px;
+    display: block;
+}
