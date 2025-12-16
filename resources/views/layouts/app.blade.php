@@ -7,104 +7,132 @@
     <title>{{ config('app.name', 'Online Counselling & Imotional Wellness Coach') }}</title>
     <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
     <link rel="stylesheet" href="{{ asset('css/dashboard_menu.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <script src="{{ asset('js/dashboard_menu.js') }}"></script>
     <link rel="icon" type="image/x-icon" href="{{ asset('images/favicon.ico') }}">
+    @stack('styles')
+
 </head>
 
 
 
 <body>
     <!-- Page Heading -->
-    @include('dashboard_header')
-    <div class="page">
+    <header class="topbar">
 
-        <!-- LEFT SIDEBAR -->
-        <aside class="sidebar">
-            <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" class="sidebar-icon">
-            <p class="sidebar-text">
-                Get a dedicated voice / video session<br>
-                with an expert for a more focussed<br>
-                experience
-            </p>
-            <a href="#" class="sidebar-link">BOOK AN APPOINTMENT</a>
-        </aside>
+        <!-- LOGO (left) -->
+        <div class="logo">
+            <span class="logo-icon"><img src="{{ asset('images/favicon.ico')}}" /></span>
+            <a href="./"><span class="logo-text">Your<span>DOST</span></span></a>
+        </div>
 
-        <!-- MAIN CONTENT -->
-        <main class="content">
+        <!-- RIGHT MENU -->
+        <div class="top-right">
 
-            <!-- MY EXPERTS -->
-            <section class="card experts">
-                <h3>My Experts</h3>
+            <!-- NOTIFICATION -->
+            <div class="icon notification">
+                🔔
+                <span class="badge">1</span>
+            </div>
 
-                <div class="experts-box">
-                    <div class="avatars">
-                        <img src="https://randomuser.me/api/portraits/women/44.jpg">
-                        <img src="https://randomuser.me/api/portraits/women/65.jpg">
-                        <img src="https://randomuser.me/api/portraits/women/68.jpg">
+            <!-- PROFILE -->
+            <div class="profile" onclick="toggleMenu()">
+                <div class="dashboard_avatar">P</div>
+                <span class="username">prathyush-1</span>
+                <span class="arrow">▾</span>
+            </div>
+
+            <!-- DROPDOWN -->
+            <div class="dropdown" id="profileMenu">
+                <a href="#"><span>👤</span> My Profile</a>
+                <a href="#"><span>⭐</span> Special Access</a>
+                <a href="#"><span>🔒</span> Change Password</a>
+                <div class="divider"></div>
+                <a href="{{ route('logout') }}"
+                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                    ↪ Logout
+                </a>
+
+                <form id="logout-form" method="POST" action="{{ route('logout') }}">
+                    @csrf
+                </form>
+
+            </div>
+
+        </div>
+    </header>
+    <main class="content">
+        @yield('content')
+    </main>
+    <section class="info-footer-section">
+        <div class="content-container">
+
+            <div class="about-us-column">
+                <h3 class="column-title">About YourDOST</h3>
+                <p class="about-text">
+                    At YourDOST, we empower organizations to build resilient and thriving teams with our
+                    evidence-based wellness solutions. Taking a proactive approach towards wellness, we
+                    address emotional, social, financial, and physical well-being. Our holistic services provide
+                    24/7 access to certified experts within 30 seconds, offering support in over 20 Indian
+                    languages. The team includes psychologists, counsellors, nutritionists, and psychiatrists.
+                </p>
+                <p class="about-text">
+                    Personalized programs are tailored to individual needs, featuring gamified and interactive
+                    experiences. With a track record of supporting over 500 organizations, conducting 30 Lakh+
+                    one-on-one sessions, and covering 23+ states, YourDOST has paved the way for improved
+                    well-being and productivity.
+                </p>
+
+                <p class="helpline-text">
+                    We are not a medical service or suicide prevention helpline. If you are feeling suicidal, we
+                    would suggest you immediately call up a suicide prevention helpline – eg. Vandrevala
+                    Foundation Helpline – 1 860 266 2345 (24x7), Aasra – +91 22 2754 6669 (24x7).
+                </p>
+            </div>
+
+            <div class="expert-download-column">
+
+                <div class="expert-card">
+                    <div class="icon-section">
+                        <div class="icon-bubble orange-bubble"></div>
+                        <div class="icon-bubble purple-bubble"></div>
                     </div>
-
-                    <div class="experts-text">
-                        <h4>Begin your first session...</h4>
-                        <p>
-                            Chat right now with an expert on any topic you are seeking
-                            answers for.
-                        </p>
-                        <span class="status">
-                            <span class="dot"></span>
-                            23 people are taking sessions
-                        </span>
+                    <div class="text-section">
+                        <h3 class="column-title">Become an Expert</h3>
+                        <p>Listen to others & be their friend in need</p>
+                        <button class="btn-expert-cta" onclick="javascript:location.href='become-expert.php'">BECOME AN EXPERT</button>
                     </div>
-
-                    <a href="#" class="experts-link">Explore Experts</a>
                 </div>
-            </section>
 
-            <!-- FEELING SECTION -->
-            <section class="card feelings">
-                <h3>How are you feeling today?</h3>
-
-                <div class="emoji-row">
-                    <div class="emoji">
-                        😀<span>Happy</span>
-                    </div>
-                    <div class="emoji">
-                        😰<span>Anxious</span>
-                    </div>
-                    <div class="emoji">
-                        😡<span>Angry</span>
-                    </div>
-                    <div class="emoji">
-                        😞<span>Demotivated</span>
-                    </div>
-                    <div class="emoji">
-                        😐<span>Worthless</span>
-                    </div>
-                    <div class="emoji">
-                        😢<span>Sad</span>
+                <div class="download-section">
+                    <h4 class="download-title">DOWNLOAD OUR APP</h4>
+                    <div class="app-links">
+                        <a href="#" class="app-store-link">
+                            <img src="path/to/google_play_badge.png" alt="Get it on Google Play">
+                        </a>
+                        <a href="#" class="app-store-link">
+                            <img src="path/to/app_store_badge.png" alt="Download on the App Store">
+                        </a>
                     </div>
                 </div>
-            </section>
+            </div>
 
-            <!-- ANXIETY TEST -->
-            <section class="card test">
-                <div class="test-icon">💬</div>
+        </div>
 
-                <div class="test-text">
-                    <span class="tag">SELF TEST</span>
-                    <h4>Anxiety Test</h4>
-                    <p>
-                        Anxiety is an emotion of dread, fear and worry that something
-                        will go wrong. Have you been feeling particularly anxious?
-                        Why not check it?
-                    </p>
-                </div>
-
-                <a href="#" class="quiz-link">TAKE A QUIZ</a>
-            </section>
-            {{ $slot }}
-        </main>
-    </div>
-    @include('dashboard_footer')
+        <div class="site-footer">
+            <nav class="footer-nav-links">
+                <a href="#">Team</a> |
+                <a href="#">Jobs</a> |
+                <a href="#">Terms of Service</a> |
+                <a href="#">Privacy Policy</a> |
+                <a href="#">Responsible Disclosure Policy</a> |
+                <a href="#">Update Cookie Preferences</a> |
+                <a href="#">Contact Us</a>
+            </nav>
+            <p class="copyright-text">© YourDOST 2024</p>
+        </div>
+    </section>
+    @stack('scripts')
 </body>
 
 

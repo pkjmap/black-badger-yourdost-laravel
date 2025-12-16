@@ -1,4 +1,5 @@
-@include('header')
+@extends('header')
+@section('content')
 <!-- HERO SOLUTIONS SECTION -->
 <section class="solutions-hero">
     <div class="solutions-content">
@@ -16,8 +17,8 @@
         </p>
 
         <div class="solutions-buttons">
-            <button class="pill-btn primary" onclick="javascript:location.href='eap.html'">WORKPLACES</button>
-            <button class="pill-btn secondary" onclick="javascript:location.href='eap.html'">CAMPUSES</button>
+            <button class="pill-btn primary" onclick="javascript:location.href='eap?type=workplaces'">WORKPLACES</button>
+            <button class="pill-btn secondary" onclick="javascript:location.href='eap?type=campuses'">CAMPUSES</button>
         </div>
     </div>
 
@@ -381,53 +382,82 @@
         </div>
 
         <div class="right-panel form-container">
-            <form action="#" method="POST" class="organization-form">
-
+            <form method="POST" class="organization-form" action="{{ route('contact-request.store') }}">
+                @csrf
                 <div class="form-group radio-group-container">
                     <label>What are you looking for?</label>
                     <div class="radio-options">
-                        <label class="radio-label"><input type="radio" name="purpose" value="partner"> To partner with YourDOST</label>
-                        <label class="radio-label"><input type="radio" name="purpose" value="therapy"> Therapy for myself</label>
-                        <label class="radio-label"><input type="radio" name="purpose" value="job"> Job at YourDOST</label>
-                        <label class="radio-label"><input type="radio" name="purpose" value="other"> Other Inquiries</label>
+                        <label class="radio-label"><input type="radio" name="inquiry_type" value="partner"> To partner with YourDOST</label>
+                        <label class="radio-label"><input type="radio" name="inquiry_type" value="therapy"> Therapy for myself</label>
+                        <label class="radio-label"><input type="radio" name="inquiry_type" value="job"> Job at YourDOST</label>
+                        <label class="radio-label"><input type="radio" name="inquiry_type" value="other"> Other Inquiries</label>
                     </div>
+                    @error('inquiry_type')
+                    <small class="error-text">{{ $message }}</small>
+                    @enderror
                 </div>
 
                 <div class="form-row">
-                    <div class="form-group"><input type="text" name="firstName" placeholder="First Name *" required></div>
-                    <div class="form-group"><input type="text" name="lastName" placeholder="Last Name *" required></div>
+                    <div class="form-group"><input type="text" name="first_name" placeholder="First Name *" required></div>
+                    @error('first_name')
+                    <small class="error-text">{{ $message }}</small>
+                    @enderror
+                    <div class="form-group"><input type="text" name="last_name" placeholder="Last Name *" required></div>
+                    @error('last_name')
+                    <small class="error-text">{{ $message }}</small>
+                    @enderror
                 </div>
+
+
                 <div class="form-row">
-                    <div class="form-group"><input type="tel" name="phoneNumber" placeholder="Phone Number *" required></div>
-                    <div class="form-group"><input type="email" name="emailAddress" placeholder="Email Address *" required></div>
+                    <div class="form-group"><input type="tel" name="phone_number" placeholder="Phone Number *" required></div>
+                    @error('phone')
+                    <small class="error-text">{{ $message }}</small>
+                    @enderror
+                    <div class="form-group"><input type="email" name="email" placeholder="Email Address *" required></div>
+                    @error('email')
+                    <small class="error-text">{{ $message }}</small>
+                    @enderror
                 </div>
 
                 <div class="form-row">
                     <div class="form-group"><input type="text" name="organization" placeholder="Your Organization *" required></div>
+                    @error('organization')
+                    <small class="error-text">{{ $message }}</small>
+                    @enderror
                     <div class="form-group"><input type="text" name="role" placeholder="Your Role *" required></div>
+                    @error('role')
+                    <small class="error-text">{{ $message }}</small>
+                    @enderror
                 </div>
 
                 <div class="form-group textarea-group">
                     <label>How can we help you? (Optional)</label>
-                    <textarea name="help" rows="5"></textarea>
+                    <textarea name="help_message" rows="5"></textarea>
+                    @error('help_message')
+                    <small class="error-text">{{ $message }}</small>
+                    @enderror
                 </div>
 
                 <div class="form-group checkbox-group-container">
                     <label>How did you hear about us? (Optional)</label>
                     <div class="checkbox-options form-row">
                         <div>
-                            <label class="checkbox-label"><input type="checkbox" name="hearAbout" value="word_of_mouth"> Word of mouth</label>
-                            <label class="checkbox-label"><input type="checkbox" name="hearAbout" value="conference"> Conference/ Event</label>
-                            <label class="checkbox-label"><input type="checkbox" name="hearAbout" value="linkedin"> LinkedIn Post</label>
-                            <label class="checkbox-label"><input type="checkbox" name="hearAbout" value="instagram"> Instagram Post</label>
+                            <label class="checkbox-label"><input type="checkbox" name="heard_from[]" value="word_of_mouth"> Word of mouth</label>
+                            <label class="checkbox-label"><input type="checkbox" name="heard_from[]" value="conference"> Conference/ Event</label>
+                            <label class="checkbox-label"><input type="checkbox" name="heard_from[]" value="linkedin"> LinkedIn Post</label>
+                            <label class="checkbox-label"><input type="checkbox" name="heard_from[]" value="instagram"> Instagram Post</label>
                         </div>
                         <div>
-                            <label class="checkbox-label"><input type="checkbox" name="hearAbout" value="news"> News/ Press</label>
-                            <label class="checkbox-label"><input type="checkbox" name="hearAbout" value="blog"> Blog/ Article</label>
-                            <label class="checkbox-label"><input type="checkbox" name="hearAbout" value="social_ad"> Social Media Ad</label>
-                            <label class="checkbox-label"><input type="checkbox" name="hearAbout" value="others"> Others</label>
+                            <label class="checkbox-label"><input type="checkbox" name="heard_from[]" value="news"> News/ Press</label>
+                            <label class="checkbox-label"><input type="checkbox" name="heard_from[]" value="blog"> Blog/ Article</label>
+                            <label class="checkbox-label"><input type="checkbox" name="heard_from[]" value="social_ad"> Social Media Ad</label>
+                            <label class="checkbox-label"><input type="checkbox" name="heard_from[]" value="others"> Others</label>
                         </div>
                     </div>
+                    @error('heard_from')
+                    <small class="error-text">{{ $message }}</small>
+                    @enderror
                 </div>
                 <div class="form-group form-submit">
                     <button type="submit" class="btn-submit">
@@ -439,7 +469,16 @@
         </div>
     </div>
 </section>
-@include('footer')
-<script src="script.js"></script>
-
-</html>
+@push('scripts')
+<script src="{{ asset('js/script.js') }}"></script>
+<script src="{{ asset('js/signup-modal.js') }}"></script>
+<script src="{{ asset('js/script.js') }}"></script>
+@if ($errors->any())
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        openSignup(); // your JS function
+    });
+</script>
+@endif
+@endpush
+@endsection

@@ -2,7 +2,7 @@
 
     <!-- LOGO (left) -->
     <div class="logo">
-        <img src="https://i.imgur.com/VXQ9G8N.png" alt="Logo">
+        <img src="{{ asset('images/favicon.ico')}}" />
         <span><b>Your</b>DOST</span>
     </div>
 
@@ -28,7 +28,15 @@
             <a href="#"><span>⭐</span> Special Access</a>
             <a href="#"><span>🔒</span> Change Password</a>
             <div class="divider"></div>
-            <a href="#"><span>↪</span> Logout</a>
+            <a href="{{ route('logout') }}"
+                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                ↪ Logout
+            </a>
+
+            <form id="logout-form" method="POST" action="{{ route('logout') }}">
+                @csrf
+            </form>
+
         </div>
 
     </div>
